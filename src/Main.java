@@ -1,11 +1,15 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Date;
 
+
 public class Main {
+
 
     public static void main(String[] args) {
 
@@ -13,7 +17,7 @@ public class Main {
         String text =
                 "Marvin Lee Minsky at the Mathematics Genealogy Project; 20 May 2014\n" +
                         "\n" +
-                        "Marvin Lee Minsky at the AI Genealogy Project.28/11/1975{reprint 18 September 2011)\n" +
+                        "Marvin Lee Minsky at the AI Genealogy Project.{reprint 18 September 2011)\n" +
                         "\n" +
                         "\"Personal page for Marvin Minsky\". web.media.mit.edu. Retrieved 23 June 2016.\n" +
                         "\n" +
@@ -38,21 +42,39 @@ public class Main {
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(text);
 
-        int count = 0;
-        while(matcher.find()) {
-            SimpleDateFormat formatter = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-            String dateInString = matcher.group();
-            Date date = null;
-            try {
-                date = formatter.parse(dateInString);
-                count++;
-                System.out.println("found: " + count + " : "
-                                           + " --> "+ date + " --> " + matcher.group());
-            } catch (ParseException e) {
+        while (matcher.find()) {
 
-                e.printStackTrace();
-            }
+            Date date = tryParse(matcher.group());
+            System.out.println("found: " + date + " : " + " --> " + matcher.group());
         }
+
+    }
+
+    public static Date tryParse(String dateString) {
+        Date date = null;
+        //List<String> formatStrings = Arrays.asList("d M y", "M d, yyyy", "MMM-dd-yyyy");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format2 = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat format3 = new SimpleDateFormat("dd MMM yyyy");
+        //SimpleDateFormat format4 = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+
+                      date =  format1.parse(dateString);
+                        if (date == null) {
+                            date = format2.parse(dateString);
+                            if (date == null) {
+                                date = format3.parse(dateString);
+                            }
+                        }
+
+
+            } catch (ParseException e) {
+            }
+
+
+        return date;
     }
 
 }
+
