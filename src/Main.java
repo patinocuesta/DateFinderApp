@@ -1,5 +1,9 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Date;
 
 public class Main {
 
@@ -9,7 +13,7 @@ public class Main {
         String text =
                 "Marvin Lee Minsky at the Mathematics Genealogy Project; 20 May 2014\n" +
                         "\n" +
-                        "Marvin Lee Minsky at the AI Genealogy Project. {reprint 18 September 2011)\n" +
+                        "Marvin Lee Minsky at the AI Genealogy Project.28/11/1975{reprint 18 September 2011)\n" +
                         "\n" +
                         "\"Personal page for Marvin Minsky\". web.media.mit.edu. Retrieved 23 June 2016.\n" +
                         "\n" +
@@ -26,25 +30,28 @@ public class Main {
                         "\"Dan David prize 2014 winners\". May 15, 2014. Retrieved May 20, 2014.";
 
         String patternString;
-        patternString = "(\\d{1,2}-\\d{1,2}-\\d{4})" +
-                        "|(\\d{1,2}/\\d{1,2}/\\d{4})" +
-                        "|(\\d{4}-\\d{2}-\\d{2})" +
-                        "|(\\d{4}/\\d{1,2}/\\d{1,2})" +
-                        "|(\\d{1,2}/(?i)(January|February|March|April|May|June|July|August|September|October|November|December)/\\d{4})" +
-                        "|(\\d{1,2}-(?i)(January|February|March|April|May|June|July|August|September|October|November|December)-\\d{4})" +
-                        "|(\\d{1,2} (?i)(January|February|March|April|May|June|July|August|September|October|November|December) \\d{4})" +
-                        "|((January|February|March|April|May|June|July|August|September|October|November|December)\\d{1,2},\\d{4})";
-
+        //Pattern made using https://regexr.com/ as reference
+        patternString = "((January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)\\s\\d{1,2}\\W{1,2}\\d{4})" +
+                "|(\\d{1,2}\\s(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)\\s\\d{4})" +
+                "|(\\d{1,2}(/|-)\\d{1,2}(/|-)\\d{2,4})" +
+                "|(\\d{2,4}(/|-)\\d{1,2}(/|-)\\d{1,2})";
         Pattern pattern = Pattern.compile(patternString);
-
         Matcher matcher = pattern.matcher(text);
 
         int count = 0;
         while(matcher.find()) {
-            count++;
-            System.out.println("found: " + count + " : "
-                    + matcher.start() + " - " + matcher.end()
-                    + " --> " + pattern.matcher(text));
+            SimpleDateFormat formatter = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+            String dateInString = matcher.group();
+            Date date = null;
+            try {
+                date = formatter.parse(dateInString);
+                count++;
+                System.out.println("found: " + count + " : "
+                                           + " --> "+ date + " --> " + matcher.group());
+            } catch (ParseException e) {
+
+                e.printStackTrace();
+            }
         }
     }
 
