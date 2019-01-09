@@ -1,11 +1,9 @@
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Date;
 
 
 public class Main {
@@ -41,40 +39,45 @@ public class Main {
                 "|(\\d{2,4}(/|-)\\d{1,2}(/|-)\\d{1,2})";
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(text);
-
-        while (matcher.find()) {
-
-            Date date = tryParse(matcher.group());
-            System.out.println("found: " + date + " : " + " --> " + matcher.group());
+        ArrayList<Date> dateList =new ArrayList<>();
+        while (matcher.find()) {Date date = tryParse(matcher.group());
+                            dateList.add(date);
         }
+        Collections.sort(dateList);
+        dateList.forEach(
+                (date -> System.out.println(
+                        "(" +  (date.toString().substring(date.toString().length()-4, date.toString().length()))+")"
+                        + "(" + (date.toString().substring(4, 7))+")"
+                                + "(" + (date.toString().substring(8, 10))+")"
+                )));
 
     }
 
-    public static Date tryParse(String dateString) {
+    public static Date tryParse (String dateStr) {
+        DateFormat dateFormat1 = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+        DateFormat dateFormat2 = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+        DateFormat dateFormat3 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = null;
-        //List<String> formatStrings = Arrays.asList("d M y", "M d, yyyy", "MMM-dd-yyyy");
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat format2 = new SimpleDateFormat("MMM dd, yyyy");
-        SimpleDateFormat format3 = new SimpleDateFormat("dd MMM yyyy");
-        //SimpleDateFormat format4 = new SimpleDateFormat("yyyy-MM-dd");
-
+        while (date == null) {
             try {
-
-                      date =  format1.parse(dateString);
-                        if (date == null) {
-                            date = format2.parse(dateString);
-                            if (date == null) {
-                                date = format3.parse(dateString);
-                            }
-                        }
-
-
+                date = dateFormat1.parse(dateStr);
             } catch (ParseException e) {
+              //  e.printStackTrace();
             }
 
+            try {
+                date = dateFormat2.parse(dateStr);
+            } catch (ParseException e) {
+             //   e.printStackTrace();
+            }
 
+            try {
+                date = dateFormat3.parse(dateStr);
+            } catch (ParseException e) {
+             //   e.printStackTrace();
+            }
+        }
         return date;
     }
-
 }
 
