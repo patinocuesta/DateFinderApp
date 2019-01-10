@@ -4,88 +4,24 @@ import java.util.List;
 import java.util.Locale;
 
 public class ParserFormats {
-    List<SimpleDateFormat> listDateFormatEn;
+    private List<SimpleDateFormat> listDateFormatEn;
 
     public ParserFormats(){
         listDateFormatEn = Arrays.asList(
-        new SimpleDateFormat("MM dd, yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM dd, yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM dd, yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MM dd. yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM dd. yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM dd. yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM dd. yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MM dd yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM dd yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM-dd-yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM-dd-yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM-dd-yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM/dd/yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM/dd/yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM/dd/yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM.dd.yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM.dd.yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM.dd.yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("MM dd, yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM dd, yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM dd, yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM dd, yy", Locale.ENGLISH),
-        new SimpleDateFormat("MM dd. yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM dd. yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM dd. yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM dd. yy", Locale.ENGLISH),
-        new SimpleDateFormat("MM dd yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM dd yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM dd yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM dd yy", Locale.ENGLISH),
-        new SimpleDateFormat("MM-dd-yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM-dd-yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM-dd-yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM-dd-yy", Locale.ENGLISH),
-        new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM/dd/yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM/dd/yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM/dd/yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMM.dd.yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMM.dd.yy", Locale.ENGLISH),
-        new SimpleDateFormat("MMMMM.dd.yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd.MM.yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd.MMM.yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd.MMMM.yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd.MMMMM.yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("dd MMMMM yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("dd-MMMMM-yyyy", Locale.ENGLISH),
-        new SimpleDateFormat("dd MMM yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd MMMM yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd MMMMM yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd-MMMM-yy", Locale.ENGLISH),
-        new SimpleDateFormat("dd-MMMMM-yy", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy MM dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy MMM dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy MMMM dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy MMMMM dd", Locale.ENGLISH),
         new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy-MMMM-dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy-MMMMM-dd", Locale.ENGLISH),
+        new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH),
+        new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH),
         new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy/MMM/dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy/MMMM/dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy/MMMMM/dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy.MMM.dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy.MMMM.dd", Locale.ENGLISH),
-        new SimpleDateFormat("yyyy.MMMMM.dd", Locale.ENGLISH));
+        new SimpleDateFormat("yyyy MM. dd", Locale.ENGLISH),
+        new SimpleDateFormat("MM. dd, yyyy", Locale.ENGLISH));
+    }
+
+    public List<SimpleDateFormat> getListDateFormatEn() {
+        return listDateFormatEn;
+    }
+
+    public void setListDateFormatEn(List<SimpleDateFormat> listDateFormatEn) {
+        this.listDateFormatEn = listDateFormatEn;
     }
 
     public List<SimpleDateFormat> SimpleDateFormatListing() {return listDateFormatEn; }

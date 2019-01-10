@@ -9,6 +9,7 @@ public class TextMatcher {
 
     private String patternString;
     private List<String> listStr = new ArrayList<String>();
+    private String listStrItem;
 
 public TextMatcher () {
 
@@ -19,15 +20,15 @@ public TextMatcher () {
 
 }
     public List<String> matcherListing(String text){
-        listStr = null;
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(text);
-
-        while (matcher.find()) {
-            System.out.println(matcher.group());
-            String Item = (matcher.group());
-          listStr.add(Item);
-
+        int i=0;
+         while (matcher.find()) {
+             listStrItem = (matcher.group());
+           // System.out.println(listStrItem);
+          //  String Item = (matcher.group());
+        listStr.add(listStrItem);
+           i++;
         }
        return  listStr;
     }

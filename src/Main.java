@@ -1,12 +1,9 @@
 
 import java.util.*;
 
-
 public class Main {
 
-
     public static void main(String[] args) {
-
 
         String text =
                 "Marvin Lee Minsky at the Mathematics Genealogy Project; 20 May 2014\n" +
@@ -27,10 +24,17 @@ public class Main {
                         "\n" +
                         "\"Dan David prize 2014 winners\". May 15, 2014. Retrieved May 20, 2014.";
 
-        TextMatcher textMatcher = new TextMatcher();
-        List<String> matches = textMatcher.matcherListing(text);
-        for (String match : matches) {
-            //System.out.println(match);
+       TextMatcher textMatcher = new TextMatcher();
+       List<String> matches = textMatcher.matcherListing(text);
+       ParserTool parserTool = new ParserTool();
+       List<Date> dates = new ArrayList<Date>();
+       dates = parserTool.parseListStrToListDate(matches);
+
+       for (String match : matches) {
+          System.out.println(match);
+      }
+        for (Date date : dates) {
+            System.out.println(date);
         }
     }
 }

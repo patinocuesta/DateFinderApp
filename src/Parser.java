@@ -17,18 +17,15 @@ public class Parser {
     public List<String> getListStr() {
         return listStr;
     }
-
     public void setListStr(List<String> listStr) {
         this.listStr = listStr;
     }
-
     public List<SimpleDateFormat> getListDateFormat() {
 
 
 
         return listDateFormat;
     }
-
     public void setListDateFormat(List<SimpleDateFormat> listDateFormat) {
         this.listDateFormat = listDateFormat;
     }
