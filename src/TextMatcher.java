@@ -13,7 +13,7 @@ public class TextMatcher {
 
 public TextMatcher () {
 
-    patternString = "((January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)\\s\\d{1,2}\\W{1,2}\\d{4})" +
+    patternString = "((January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)\\s\\d{1,2}\\W{0,2}\\d{4})" +
             "|(\\d{1,2}\\s(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)\\s\\d{4})" +
             "|(\\d{1,2}(/|-)\\d{1,2}(/|-)\\d{2,4})" +
             "|(\\d{2,4}(/|-)\\d{1,2}(/|-)\\d{1,2})";
@@ -31,6 +31,11 @@ public TextMatcher () {
            i++;
         }
        return  listStr;
+    }
+
+    public String breakLineDelete(String text) {
+
+        return text.replaceAll("\n", " ");
     }
 
     public String getPatternString() {

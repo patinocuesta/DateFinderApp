@@ -1,4 +1,5 @@
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Main {
@@ -8,7 +9,7 @@ public class Main {
         String text =
                 "Marvin Lee Minsky at the Mathematics Genealogy Project; 20 May 2014\n" +
                         "\n" +
-                        "Marvin Lee Minsky at the AI Genealogy Project.{reprint 18 September 2011)\n" +
+                        "Marvin Lee Minsky at the AI Genealogy Project. {reprint 18 September 2011)\n" +
                         "\n" +
                         "\"Personal page for Marvin Minsky\". web.media.mit.edu. Retrieved 23 June 2016.\n" +
                         "\n" +
@@ -25,17 +26,32 @@ public class Main {
                         "\"Dan David prize 2014 winners\". May 15, 2014. Retrieved May 20, 2014.";
 
        TextMatcher textMatcher = new TextMatcher();
+       text = textMatcher.breakLineDelete(text);
        List<String> matches = textMatcher.matcherListing(text);
        ParserTool parserTool = new ParserTool();
        List<Date> dates = new ArrayList<Date>();
        dates = parserTool.parseListStrToListDate(matches);
+       Collections.sort(dates);
+        int i=0;
 
-       for (String match : matches) {
-          System.out.println(match);
-      }
-        for (Date date : dates) {
-            System.out.println(date);
+               for (Date date : dates)
+               {
+                   try {
+                  //     System.out.println(i+1);
+                       if (date.before(dates.get(i +1))) {
+                           System.out.println(i);
+
+                           System.out.println(new SimpleDateFormat("yyyy").format(date) +
+                                                      ":\n\t-" + new SimpleDateFormat("MM").format(date) +
+                                                      "\n\t\t-" + new SimpleDateFormat("dd").format(date) +
+                                                      "(" + Collections.frequency(dates, date) + ")");
+
+                       }
+                       i++;
+                   }catch (IndexOutOfBoundsException e) {continue;
+                       }
+           }
         }
     }
-}
+
 
