@@ -17,16 +17,16 @@ public class ParserTool {
         simpleDateFormats = parserFormats.SimpleDateFormatListing();
         List<Date> dates = new ArrayList<Date>();
         for (String item : listStr) {
-              for (SimpleDateFormat simpleDateFormat : simpleDateFormats){
+            for (SimpleDateFormat simpleDateFormat : simpleDateFormats){
                 try {
-                     Date date = simpleDateFormat.parse(item);
-                     dates.add(date);
-                         break;
+                    Date date = simpleDateFormat.parse(item);
+                    dates.add(date);
+                    break;
                 } catch (Exception e1) {
-                   // e1.printStackTrace();
+                    // e1.printStackTrace();
                 }
             }
-       }
+        }
         return dates;
     }
 
