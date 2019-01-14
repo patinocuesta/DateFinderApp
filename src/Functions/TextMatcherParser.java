@@ -10,7 +10,6 @@ public class TextMatcherParser {
     */
     private TextMatcher textMatcher;
     private ParserTool parserTool;
-    String s;
     /*
     Constructors
     */
@@ -23,16 +22,12 @@ public class TextMatcherParser {
     }
 
     public String stringTextToStringMultilevelList(String text) {
-        if (text != null) {
-try {
     text = textMatcher.breakLineDelete(text);
     List<String> matches = textMatcher.matcherListing(text);
     List<Date> dates = parserTool.parseListStrToListDate(matches);
     List<DateItem> dateItems = parserTool.formatListToMap(dates);
-    s = parserTool.ListToMultilevelMapToString(dateItems);
-    }catch (Exception e1){}
-        } else {s="error";}
-        return s;
+    String s = parserTool.ListToMultilevelMapToString(dateItems);
+      return s;
     }
 
     /*
