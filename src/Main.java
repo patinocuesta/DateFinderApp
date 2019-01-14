@@ -1,6 +1,8 @@
 import Data.DateItem;
+
 import Functions.ParserTool;
 import Functions.TextMatcher;
+import Functions.TextMatcherParser;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,53 +31,8 @@ public class Main {
                         "\n" +
                         "\"Dan David prize 2014 winners\". May 15, 2014. Retrieved May 20, 2014.";
 
-        TextMatcher textMatcher = new TextMatcher();
-        text = textMatcher.breakLineDelete(text);
-        List<String> matches = textMatcher.matcherListing(text);
-        ParserTool parserTool = new ParserTool();
-        List<Date> dates = new ArrayList<Date>();
-        dates = parserTool.parseListStrToListDate(matches);
-        Collections.sort(dates);
-
-        Map<Date, Integer> map = new LinkedHashMap<Date, Integer>();
-        for (Date date : dates) {
-            map.put(date, Collections.frequency(dates, date));}
-
-        List<DateItem> dateItems = new ArrayList<DateItem>();
-        Date dateItem;
-
-        for (Map.Entry<Date, Integer> mapentry : map.entrySet()) {
-            dateItem = mapentry.getKey();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(dateItem);
-            dateItems.add(new DateItem(calendar.get(Calendar.YEAR),
-                                       calendar.get(Calendar.MONTH) + 1,
-                                       calendar.get(Calendar.DAY_OF_MONTH),
-                                       mapentry.getValue()));
-        }
-
-        Map<Integer, Map<Integer, List<DateItem>>> mapDateItems=dateItems
-                .stream()
-               .collect(
-                       Collectors.groupingBy(p ->p.getYear(),
-                        Collectors.groupingBy(p ->p.getMonth())));
-
-        String s = mapDateItems.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .map (e ->e.getKey() +":"+ e.getValue()+"")
-                .collect(joining(""));
-
-        s= s.replace("=", "")
-            .replace(":", ":\n")
-            .replace("], ", "\t\t-")
-            .replace("),", ")")
-            .replace("):", ")\n")
-            .replace("]}", "\n")
-            .replace(",", "")
-            .replace("{", "\t\t-")
-            .replace("[", "\n");
-
+        TextMatcherParser textMatcherParser = new TextMatcherParser();
+        String s = textMatcherParser.stringTextToStringMultilevelList(text);
         System.out.println(s);
     }
 
