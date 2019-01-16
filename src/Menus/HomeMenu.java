@@ -37,13 +37,16 @@ public HomeMenu() {}
                  this.setMenuLine("Edit source file  name"+"\n\t\t Current file name: "+ fileSource.getSourceNameFile());
              }
          });
-         subMenu1.add(new MenuOption("2","Edit source file extension"+"\n\t\t Current file extension: "+ fileSource.getSourceExtFile()){
+         subMenu1.add(new MenuOption("2","Edit source file extension (txt or pdf)"+"\n\t\t Current file extension: "+ fileSource.getSourceExtFile()){
              @Override
              public void doAction() {
                  scanner = new Scanner(System.in);
                  System.out.print("Enter file extension : ");
                  String input = scanner.nextLine();
-                 //tratamiento nombre
+                 if  (input!="txt"|| input !="pdf"){
+                     System.out.print("Wrong format. Try again:");
+                      input = scanner.nextLine();
+                 }
                  fileSource.setSourceExtFile(input);
                  System.out.println("File extension : " + fileSource.getSourceExtFile() +"\n");
                  this.setMenuLine("Edit source file extension"+"\n\t\t Current file extension: "+ fileSource.getSourceExtFile());
@@ -55,7 +58,7 @@ public HomeMenu() {}
                 scanner = new Scanner(System.in);
                 System.out.print("Enter file path : ");
                 String input = scanner.nextLine();
-                //tratamiento nombre
+                input = input.replace("\","\\");
                 fileSource.setSourcePathFile(input);
                 System.out.println("File path : " + fileSource.getSourcePathFile()+"\n");
                 this.setMenuLine("Edit source file  path"+"\n\t\t Current file path: "+ fileSource.getSourcePathFile());
@@ -73,13 +76,16 @@ public HomeMenu() {}
                  this.setMenuLine("Edit output file  name"+"\n\t\t Current file name: "+ fileToPrint.getDestinationNameFile());
              }
          });
-         subMenu1.add(new MenuOption("5","Edit output file extension"+"\n\t\t Current file extension: "+ fileToPrint.getDestinationExtFile()){
+         subMenu1.add(new MenuOption("5","Edit output file extension(pdf ou txt)"+"\n\t\t Current file extension: "+ fileToPrint.getDestinationExtFile()){
              @Override
              public void doAction() {
                  scanner = new Scanner(System.in);
                  System.out.print("Enter file name : ");
                  String input = scanner.nextLine();
-                 //tratamiento nombre
+                 if  (input!="txt"|| input !="pdf"){
+                     System.out.print("Wrong format. Try again:");
+                     input = scanner.nextLine();
+                 }
                  fileToPrint.setDestinationExtFile(input);
                  System.out.println("File extension : " + fileToPrint.getDestinationExtFile()+"\n");
                  this.setMenuLine("Edit output file  extension"+"\n\t\t Current file extension: "+ fileToPrint.getDestinationExtFile());
@@ -121,23 +127,26 @@ public HomeMenu() {}
          subMenu2.add(new MenuOption("1","Enter your text") {
              @Override
              public void doAction() {
-                 String text="";
-                 Scanner sc = new Scanner(System.in);
-                 while (sc.hasNext()) {
-                     String textLine = sc.nextLine();
-                     if (textLine.contains("$$$")) break;
-                     text = text + "\n"+textLine;
+                 try {
+                     String text = "";
+                     Scanner sc = new Scanner(System.in);
 
+                     while (sc.hasNextLine()) {
+                         String textLine = sc.nextLine();
+                         if (textLine.contains("$$$")) break;
+                         text = text + "\n" + textLine;
+                     }
+                     System.out.println("\n************************************************************");
+                     TextMatcherParser textMatcherParser = new TextMatcherParser();
+                     System.out.println("************************************************************\n");
+                     System.out.println(textMatcherParser.stringTextToStringMultilevelList(text));
+                 }catch (NullPointerException  e ) {
+                     //e.printStackTrace();
+                 } catch(Exception e ) {
+                     //System.out.println("Unexcepted Exception");
+                    // e.printStackTrace();
                  }
-                 sc.close();
-
-                 //sc.close();
-                // System.out.println(tokens);
-                 System.out.println("\n************************************************************");
-                // System.out.println(text);
-                // System.out.println("************************************************************\n");
-                TextMatcherParser textMatcherParser = new TextMatcherParser();
-              System.out.println(textMatcherParser.stringTextToStringMultilevelList(text));
+                 finally{}
              }
          });
 
@@ -157,7 +166,6 @@ public HomeMenu() {}
                  subMenu2.loopUntilExit();
              }
          });
-
          mainMenu.loopUntilExit();
 
      }

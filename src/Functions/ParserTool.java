@@ -77,17 +77,17 @@ Method for formatting a Dates list with default format
                 .collect(joining(""));
 
         s= s.replace("=", "")
-                .replace(":", ":\r\n")
-                .replace("], ", "-")
-                .replace(")", ")\r\n\t")
-                .replace("),", ")\r\n")
+                .replace(":", ":\r\n\t")
+                .replace("], ", "\t-")
+                .replace(")", ")\r\n")
+                .replace("),", ")\r\n")//este  no
                 .replace("):", ")\r\n")
-                .replace("]}", "\r\n")
+                .replace("]}", "\r\n")//este no
                 .replace(",", "")
-                .replace("{", "\t-")
+                .replace("{", "-")
                 .replace("[", "\r\n")
-                .replace("=[", "\r\n")
-                .replace("=[", "\r\n")
+                .replace("=[", "\r\n")//este no
+                .replace("=[", "\r\n")//este no
                 .replace("\t\n \t\t\t", "\t\t\t");
 
 

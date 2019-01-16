@@ -12,15 +12,7 @@ import Menus.HomeMenu;
 public class Main {
     public Main() {}
     public static void main(String[] args) {
-/*
-     String fileName ="SampleTest.pdf";
-     String filePath = "C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\";
 
-        TextReader textReader =  new TextReader(filePath,fileName);
-        String text = textReader.fileReaderStr();
-        TextMatcherParser textMatcherParser = new TextMatcherParser();
-        System.out.println(textMatcherParser.stringTextToStringMultilevelList(text));
-    */
 HomeMenu homeMenu = new HomeMenu();
         homeMenu.homeMenuStart();
     }

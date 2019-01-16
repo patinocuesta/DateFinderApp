@@ -1,5 +1,8 @@
 package Functions;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -21,13 +24,27 @@ public class TextReader {
     public String fileReaderStr (){
        try {
             File file = new File(filePath + fileName+ "."+fileExt);
-            Scanner sc = new Scanner(file);
-            while (sc.hasNext()) {
-            String textLine = sc.nextLine();
-            text = text + "\n"+textLine;
-            }
-            sc.close();
-
+            if (fileExt=="txt") {
+                Scanner sc = new Scanner(file);
+                while (sc.hasNext()) {
+                    String textLine = sc.nextLine();
+                    text = text + "\n" + textLine;
+                }
+                sc.close();
+            }else {
+                //Loading an existing document
+                PDDocument document = PDDocument.load(file);
+                //Instantiate PDFTextStripper class
+                PDFTextStripper pdfStripper = new PDFTextStripper();
+                //Retrieving text from PDF document
+                String textRaw = pdfStripper.getText(document);
+                String lines[] = textRaw.split("\\r?\\n");
+                for (String line : lines) {
+                    text = text +line;
+                }
+                //Closing the document
+                document.close();
+           }
         }   catch (IOException e) { }
        return text;
     }
