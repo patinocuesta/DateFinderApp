@@ -77,19 +77,25 @@ Method for formatting a Dates list with default format
                 .collect(joining(""));
 
         s= s.replace("=", "")
-                .replace(":", ":\n")
-                .replace("], ", "\t\t-")
-                .replace("),", ")")
-                .replace("):", ")\n")
-                .replace("]}", "\n")
+                .replace(":", ":\r\n")
+                .replace("], ", "-")
+                .replace(")", ")\r\n\t")
+                .replace("),", ")\r\n")
+                .replace("):", ")\r\n")
+                .replace("]}", "\r\n")
                 .replace(",", "")
-                .replace("{", "\t\t-")
-                .replace("[", "\n");
-        return s;
+                .replace("{", "\t-")
+                .replace("[", "\r\n")
+                .replace("=[", "\r\n")
+                .replace("=[", "\r\n")
+                .replace("\t\n \t\t\t", "\t\t\t");
+
+
+      return s;
     }
-/*
-Getters and Setters
-*/
+    /*
+    Getters and Setters
+    */
     public ParserFormats getParserFormats() {
         return parserFormats;
     }

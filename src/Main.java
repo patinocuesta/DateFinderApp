@@ -1,37 +1,29 @@
-import Functions.TextMatcherParser;
+import Menus.HomeMenu;
+
+/** DateFinder command line application
+ * <p>
+ * Java program to parse any input text and extract every date it contains and count the dates. A date has to be precise, including a day, a month and a year.
+ * </p>
+ * @author Donato Patino <patinodonato@gmail.com>
+ * @version 0.1
+ * @since 2019-01-19
+ */
 
 public class Main {
-
+    public Main() {}
     public static void main(String[] args) {
+/*
+     String fileName ="SampleTest.pdf";
+     String filePath = "C:\\Users\\"+System.getProperty("user.name")+"\\Desktop\\";
 
-        String text =
-                "Marvin Lee Minsky at the Mathematics Genealogy Project; 20 May 2014\n" +
-                        "\n" +
-                        "Marvin Lee Minsky at the AI Genealogy Project. {reprint 18 September 2011)\n" +
-                        "\n" +
-                        "\"Personal page for Marvin Minsky\". web.media.mit.edu. Retrieved 23 June 2016.\n" +
-                        "\n" +
-                        "Admin (January 27, 2016). \"Official Alcor Statement Concerning Marvin Minsky\". \n" +
-                        "\n" +
-                        "\tAlcor Life Extension Foundation. Retrieved 2016-04-07.\n" +
-                        "\n" +
-                        "\"IEEE Computer Society Magazine Honors Artificial Intelligence Leaders\". \n" +
-                        "\n" +
-                        "\tDigitalJournal.com. August 24, 2011. Retrieved September 18, 2011. \n" +
-                        "\n" +
-                        "\tPress release source: PRWeb (Vocus).\n" +
-                        "\n" +
-                        "\"Dan David prize 2014 winners\". May 15, 2014. Retrieved May 20, 2014.";
-
+        TextReader textReader =  new TextReader(filePath,fileName);
+        String text = textReader.fileReaderStr();
         TextMatcherParser textMatcherParser = new TextMatcherParser();
-        String s = textMatcherParser.stringTextToStringMultilevelList(text);
-        System.out.println(s);
+        System.out.println(textMatcherParser.stringTextToStringMultilevelList(text));
+    */
+HomeMenu homeMenu = new HomeMenu();
+        homeMenu.homeMenuStart();
     }
-
-
-
-
-
 }
 
 
