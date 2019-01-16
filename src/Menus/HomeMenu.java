@@ -8,8 +8,6 @@ import Menus.MenuModel.Menu;
 import Menus.MenuModel.MenuOption;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class HomeMenu {
@@ -31,10 +29,16 @@ public HomeMenu() {}
                  scanner = new Scanner(System.in);
                  System.out.print("Enter file name : ");
                  String input = scanner.nextLine();
-                 //tratamiento nombre
-                 fileSource.setSourceNameFile(input);
-                 System.out.println("File name : " + fileSource.getSourceNameFile()+"\n");
-                 this.setMenuLine("Edit source file  name"+"\n\t\t Current file name: "+ fileSource.getSourceNameFile());
+                 String regexInput = "(\"[\\\\/:*?\\\"<>|]\",\"\")";
+                 String regex = "complicated_regex_expression" ;
+                 if (input.matches(regex)) {
+                     fileSource.setSourceNameFile(input);
+                     System.out.println("File name : " + fileSource.getSourceNameFile()+"\n");
+                     this.setMenuLine("Edit source file  name"+"\n\t\t Current file name: "+ fileSource.getSourceNameFile());
+                 } else {
+                     System.out.print("name has some special characters. Try again:");
+                     input = scanner.nextLine();
+                 }
              }
          });
          subMenu1.add(new MenuOption("2","Edit source file extension (txt or pdf)"+"\n\t\t Current file extension: "+ fileSource.getSourceExtFile()){
@@ -70,10 +74,16 @@ public HomeMenu() {}
                  scanner = new Scanner(System.in);
                  System.out.print("Enter file name : ");
                  String input = scanner.nextLine();
-                 //tratamiento nombre
-                 fileToPrint.setDestinationNameFile(input);
-                 System.out.println("File name : " + fileToPrint.getDestinationNameFile()+"\n");
-                 this.setMenuLine("Edit output file  name"+"\n\t\t Current file name: "+ fileToPrint.getDestinationNameFile());
+                 String regexInput = "(\"[\\\\/:*?\\\"<>|]\",\"\")";
+                 String regex = "complicated_regex_expression" ;
+                 if (input.matches(regex)) {
+                     fileToPrint.setDestinationNameFile(input);
+                     System.out.println("File name : " + fileToPrint.getDestinationNameFile()+"\n");
+                     this.setMenuLine("Edit source file  name"+"\n\t\t Current file name: "+ fileToPrint.getDestinationNameFile());
+                 } else {
+                     System.out.print("name has some special characters. Try again:");
+                     input = scanner.nextLine();
+                 }
              }
          });
          subMenu1.add(new MenuOption("5","Edit output file extension(pdf ou txt)"+"\n\t\t Current file extension: "+ fileToPrint.getDestinationExtFile()){
@@ -103,7 +113,6 @@ public HomeMenu() {}
                  this.setMenuLine("Edit output file  path"+"\n\t\t Current file path: "+ fileToPrint.getDestinationPathFile());
              }
          });
-
          subMenu1.add(new MenuOption("+","Go and get it!") {
              @Override
              public void doAction() {
@@ -112,17 +121,18 @@ public HomeMenu() {}
                          ,fileSource.getSourceExtFile());
                  String text = textReader.fileReaderStr();
                  TextMatcherParser textMatcherParser = new TextMatcherParser();
-                 try {
-                     BufferedWriter writer = new BufferedWriter(new FileWriter(fileToPrint.getDestinationPathFile()
-                                                                                       + fileToPrint.getDestinationNameFile()
-                                                                                       +"."+fileToPrint.getDestinationExtFile()));
-                     writer.write(textMatcherParser.stringTextToStringMultilevelList(text));
-                     writer.close();
-                 }catch (IOException e ) {
-                     //e.printStackTrace();
-                 }
-             }
 
+                     try {
+                         BufferedWriter writer = new BufferedWriter(new FileWriter(fileToPrint.getDestinationPathFile()
+                                 + fileToPrint.getDestinationNameFile()
+                                 + "." + fileToPrint.getDestinationExtFile()));
+                         writer.write(textMatcherParser.stringTextToStringMultilevelList(text));
+                         writer.close();
+                     } catch (IOException e) { }
+
+                 System.out.print("Have a nice day!");
+                 System.exit(0);
+             }
          });
          subMenu2.add(new MenuOption("1","Enter your text") {
              @Override
@@ -130,7 +140,6 @@ public HomeMenu() {}
                  try {
                      String text = "";
                      Scanner sc = new Scanner(System.in);
-
                      while (sc.hasNextLine()) {
                          String textLine = sc.nextLine();
                          if (textLine.contains("$$$")) break;
@@ -140,42 +149,50 @@ public HomeMenu() {}
                      TextMatcherParser textMatcherParser = new TextMatcherParser();
                      System.out.println("************************************************************\n");
                      System.out.println(textMatcherParser.stringTextToStringMultilevelList(text));
-                 }catch (NullPointerException  e ) {
-                     //e.printStackTrace();
-                 } catch(Exception e ) {
-                     //System.out.println("Unexcepted Exception");
-                    // e.printStackTrace();
-                 }
-                 finally{}
+                     System.out.println("----------------------------------------------");
+                     System.out.print("Export report (Y/N):");
+                     String input="";
+                     input = sc.nextLine().toUpperCase();
+                     if  (input=="Y"){
+                         textMatcherParser = new TextMatcherParser();
+                         try {
+                             BufferedWriter writer = new BufferedWriter(new FileWriter(
+                                     "\\C:\\Users\\"+ System.getProperty("user.name")+ "\\Desktop\\"
+                                             + "reportDates"
+                                             + "." + "txt"));
+                             writer.write(textMatcherParser.stringTextToStringMultilevelList(text));
+                             writer.close();
+                             System.out.print("Have a nice day!");
+                             System.exit(0);
+                         } catch (IOException e) {}
+                     } else if (input=="N") {
+                         System.out.print("Have a nice day!");
+                         System.exit(0);
+                     }
+                     else {
+                         System.out.print("Fill with Y/N. Try again:");
+                         input = scanner.nextLine();
+                     }
+                 }catch (Exception e) {}
              }
-         });
-
-
-
+         }
+             );
          mainMenu.add(new MenuOption("1","Parse a document stored in your computer") {
              @Override
              public void doAction() {
-
                  subMenu1.loopUntilExit();
              }
-         });
+         }
+         );
          mainMenu.add(new MenuOption("2","Parse an input text") {
              @Override
              public void doAction() {
-
                  subMenu2.loopUntilExit();
              }
-         });
+         }
+         );
          mainMenu.loopUntilExit();
-
      }
-
-
-
-
-
-
-
 
     public Menu getMainMenu() {
         return mainMenu;

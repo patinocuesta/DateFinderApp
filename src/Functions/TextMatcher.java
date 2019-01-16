@@ -27,8 +27,6 @@ Constructors
             int i=0;
             while (matcher.find()) {
                 listStrItem = (matcher.group());
-                // System.out.println(listStrItem);
-                //  String Item = (matcher.group());
                 listStr.add(listStrItem);
                 i++;}
         return  listStr;}
