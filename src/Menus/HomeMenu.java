@@ -58,7 +58,7 @@ public HomeMenu() {}
                 scanner = new Scanner(System.in);
                 System.out.print("Enter file path : ");
                 String input = scanner.nextLine();
-                input = input.replace("\","\\");
+                input = input.replace("\\","\\\\");
                 fileSource.setSourcePathFile(input);
                 System.out.println("File path : " + fileSource.getSourcePathFile()+"\n");
                 this.setMenuLine("Edit source file  path"+"\n\t\t Current file path: "+ fileSource.getSourcePathFile());
@@ -97,7 +97,7 @@ public HomeMenu() {}
                  scanner = new Scanner(System.in);
                  System.out.print("Enter file name : ");
                  String input = scanner.nextLine();
-                 //tratamiento nombre
+                 input = input.replace("\\","\\\\");
                  fileToPrint.setDestinationPathFile(input);
                  System.out.println("File path : " + fileToPrint.getDestinationPathFile()+"\n");
                  this.setMenuLine("Edit output file  path"+"\n\t\t Current file path: "+ fileToPrint.getDestinationPathFile());
