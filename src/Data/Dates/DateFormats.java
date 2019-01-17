@@ -1,10 +1,10 @@
-package Data;
+package Data.Dates;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class ParserFormats {
+public class DateFormats {
 /*
 Attributes
 */
@@ -12,7 +12,7 @@ Attributes
 /*
 Constructor
 */
-    public ParserFormats(){
+    public DateFormats(){
         listDateFormatEn = Arrays.asList(
         new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH),
         new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH),

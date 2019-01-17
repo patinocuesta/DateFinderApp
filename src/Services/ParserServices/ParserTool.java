@@ -1,7 +1,7 @@
-package Functions;
+package Services.ParserServices;
 
-import Data.DateItem;
-import Data.ParserFormats;
+import Data.Dates.DateItem;
+import Data.Dates.DateFormats;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,20 +11,20 @@ public class ParserTool {
 /*
 Attributes
 */
-    private ParserFormats parserFormats = new ParserFormats();
+    private DateFormats dateFormats = new DateFormats();
     private List<SimpleDateFormat> simpleDateFormats;
 /*
 Constructor
 */
     public ParserTool (){ }
-    public ParserTool (ParserFormats parserFormats, List<SimpleDateFormat> simpleDateFormats){
-    this.parserFormats = parserFormats;
+    public ParserTool (DateFormats dateFormats, List<SimpleDateFormat> simpleDateFormats){
+    this.dateFormats = dateFormats;
     this.simpleDateFormats =  simpleDateFormats;}
 /*
 Method for parsing a String list into Dates list
  */
     public List<Date> parseListStrToListDate(List<String> listStr) {
-        simpleDateFormats = parserFormats.SimpleDateFormatListing();
+        simpleDateFormats = dateFormats.SimpleDateFormatListing();
         List<Date> dates = new ArrayList<Date>();
         for (String item : listStr) {
             for (SimpleDateFormat simpleDateFormat : simpleDateFormats){
@@ -96,11 +96,11 @@ Method for formatting a Dates list with default format
     /*
     Getters and Setters
     */
-    public ParserFormats getParserFormats() {
-        return parserFormats;
+    public DateFormats getDateFormats() {
+        return dateFormats;
     }
-    public void setParserFormats(ParserFormats parserFormats) {
-        parserFormats = parserFormats;
+    public void setDateFormats(DateFormats dateFormats) {
+        dateFormats = dateFormats;
     }
     public List<SimpleDateFormat> getSimpleDateFormats() {
         return simpleDateFormats;

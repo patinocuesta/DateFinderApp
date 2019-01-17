@@ -1,6 +1,8 @@
-package Functions;
+package Services.ParserServices;
 
-import Data.DateItem;
+import Data.Dates.DateItem;
+import Services.RegexMatchers.DateMatcher;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,20 +10,20 @@ public class TextMatcherParser {
 /*
 Attributes
 */
-    private TextMatcher textMatcher;
+    private DateMatcher dateMatcher;
     private ParserTool parserTool;
 /*
 Constructors
 */
     public TextMatcherParser() {}
-    public TextMatcherParser(TextMatcher textMatcher, ParserTool parserTool) {
-        this.textMatcher = textMatcher;
+    public TextMatcherParser(DateMatcher dateMatcher, ParserTool parserTool) {
+        this.dateMatcher = dateMatcher;
         this.parserTool = parserTool;}
 
     public String stringTextToStringMultilevelList(String text) {
-    TextMatcher textMatcher = new TextMatcher();
-    text = textMatcher.breakLineDelete(text);
-    List<String> matches = textMatcher.matcherListing(text);
+    DateMatcher dateMatcher = new DateMatcher();
+    text = dateMatcher.breakLineDelete(text);
+    List<String> matches = dateMatcher.matcherListing(text);
     ParserTool parserTool = new ParserTool();
     List<Date> dates = parserTool.parseListStrToListDate(matches);
     List<DateItem> dateItems = parserTool.formatListToMap(dates);
@@ -33,11 +35,11 @@ Constructors
 /*
 Getters and Setters
 */
-    public TextMatcher getTextMatcher() {
-        return textMatcher;
+    public DateMatcher getDateMatcher() {
+        return dateMatcher;
     }
-    public void setTextMatcher(TextMatcher textMatcher) {
-        this.textMatcher = textMatcher;
+    public void setDateMatcher(DateMatcher dateMatcher) {
+        this.dateMatcher = dateMatcher;
     }
     public ParserTool getParserTool() {
         return parserTool;

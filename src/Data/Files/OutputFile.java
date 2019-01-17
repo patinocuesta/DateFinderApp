@@ -1,12 +1,12 @@
-package Data;
+package Data.Files;
 
-public class FileToPrint {
+public class OutputFile {
     private String destinationNameFile;
     private String destinationExtFile;
     private String destinationPathFile;
 
-    public FileToPrint (){}
-    public FileToPrint (String destinationNameFile,String destinationExtFile, String destinationPathFile ){
+    public OutputFile(){}
+    public OutputFile(String destinationNameFile, String destinationExtFile, String destinationPathFile ){
         this.destinationNameFile = destinationNameFile;
         this.destinationExtFile = destinationExtFile;
         this.destinationPathFile = destinationPathFile;
@@ -33,7 +33,7 @@ public class FileToPrint {
 
     @Override
     public String toString() {
-        return "FileToPrint{" +
+        return "OutputFile{" +
                 "destinationNameFile='" + destinationNameFile + '\'' +
                 ", destinationExtFile='" + destinationExtFile + '\'' +
                 ", destinationPathFile='" + destinationPathFile + '\'' +

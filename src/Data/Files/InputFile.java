@@ -1,13 +1,13 @@
-package Data;
+package Data.Files;
 
-public class FileSource {
+public class InputFile {
     private String sourceNameFile;
     private String sourceExtFile;
     private String sourcePathFile;
 
 
-    public FileSource (){}
-    public FileSource (String sourceNameFile,String sourceExtFile, String sourcePathFile ){
+    public InputFile(){}
+    public InputFile(String sourceNameFile, String sourceExtFile, String sourcePathFile ){
         this.sourceNameFile = sourceNameFile;
         this.sourceExtFile = sourceExtFile;
         this.sourcePathFile = sourcePathFile;
@@ -34,7 +34,7 @@ public class FileSource {
 
     @Override
     public String toString() {
-        return "FileSource{" +
+        return "InputFile{" +
                 "sourceNameFile='" + sourceNameFile + '\'' +
                 ", sourceExtFile='" + sourceExtFile + '\'' +
                 ", sourcePathFile='" + sourcePathFile + '\'' +
