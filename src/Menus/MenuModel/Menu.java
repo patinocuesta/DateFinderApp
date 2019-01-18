@@ -38,6 +38,7 @@ public class Menu {
                 boolean foundOption = false;
                 for (MenuOption m : menuOptions) {
                     if (m.getOption().equalsIgnoreCase(input)) {
+
                         m.doAction();
                         foundOption = true;
                     }

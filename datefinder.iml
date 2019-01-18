@@ -12,5 +12,7 @@
     <orderEntry type="library" name="pdfbox-tools-2.0.13" level="project" />
     <orderEntry type="library" name="pdfbox-debugger-2.0.13" level="project" />
     <orderEntry type="library" name="preflight-2.0.13" level="project" />
+    <orderEntry type="library" name="commons-logging-1.2" level="project" />
+    <orderEntry type="library" name="fontbox-2.0.13" level="project" />
   </component>
 </module>

@@ -20,78 +20,98 @@ public class HomeMenu {
     private Menu mainMenu= new Menu();
     private Menu subMenu1= new Menu(1);
     private Menu subMenu2= new Menu(2);
-    private InputFile inputFile = new InputFile("SampleTest","txt","C:\\Users\\"+ System.getProperty("user.name")+"\\Desktop\\");
-    private OutputFile outputFile = new OutputFile("Dates_found_in "+ inputFile.getSourceNameFile(),"txt","C:\\Users\\"+ System.getProperty("user.name")+"\\Desktop\\");
-    private ExtMatcher extMatcher;
-    private FileMatcher fileMatcher;
-    private PathMatcher pathMatcher;
+    private InputFile inputFile = new InputFile("PresidentsList","pdf","C:\\Users\\"+ System.getProperty("user.name")+"\\Desktop\\");
+    private OutputFile outputFile = new OutputFile("Presidents","txt","C:\\Users\\"+ System.getProperty("user.name")+"\\Desktop\\");
+
     public HomeMenu() {}
          public void  homeMenuStart() {
+
              System.out.println("**************");
              System.out.println("* DateFinder *");
              System.out.println("**************\n");
              subMenu1.add(new MenuOption("1","Edit source file  name"+"\n\t\t Current file name: "+ inputFile.getSourceNameFile()){
                  @Override
                  public void doAction() {
-                    fileMatcher.inputFileNameValidator(inputFile);
-                    this.setMenuLine("Edit source file  name"+"\n\t\t Current file name: "+ inputFile.getSourceNameFile());
-                  }
+                     FileMatcher fileMatcherInput = new FileMatcher();
+                     fileMatcherInput.inputFileNameValidator(inputFile);
+                     this.setMenuLine("Edit source file  name" + "\n\t\t Current file name: " + inputFile.getSourceNameFile());
+                 }
              });
              subMenu1.add(new MenuOption("2","Edit source file extension (txt or pdf)"+"\n\t\t Current file extension: "+ inputFile.getSourceExtFile()){
                  @Override
                  public void doAction() {
-                     extMatcher.inputFileExtValidator(inputFile);
+                     ExtMatcher extMatcherInput = new ExtMatcher();
+                     extMatcherInput.inputFileExtValidator(inputFile);
                      this.setMenuLine("Edit source file extension"+"\n\t\t Current file extension: "+ inputFile.getSourceExtFile());
                  }
              });
              subMenu1.add(new MenuOption("3","Edit source file  path"+"\n\t\t Current file path: "+ inputFile.getSourcePathFile()){
                 @Override
                  public void doAction() {
-                    pathMatcher.inputFilePathValidator(inputFile);
+                    PathMatcher pathMatcherInput = new PathMatcher();
+                    pathMatcherInput.inputFilePathValidator(inputFile);
                     this.setMenuLine("Edit source file  path"+"\n\t\t Current file path: "+ inputFile.getSourcePathFile());
                 }
              });
              subMenu1.add(new MenuOption("4","Edit output file name"+"\n\t\t Current file name: "+ outputFile.getDestinationNameFile()){
                  @Override
                  public void doAction() {
-                     fileMatcher.outputFileNameValidator(outputFile);
+                     FileMatcher fileMatcherOutput = new FileMatcher();
+                     fileMatcherOutput.outputFileNameValidator(outputFile);
                      this.setMenuLine("Edit source file  name"+"\n\t\t Current file name: "+ outputFile.getDestinationNameFile());
                  }
              });
              subMenu1.add(new MenuOption("5","Edit output file extension(pdf ou txt)"+"\n\t\t Current file extension: "+ outputFile.getDestinationExtFile()){
                  @Override
                  public void doAction() {
-                        extMatcher.outputFileExtValidator(outputFile);
+                     ExtMatcher extMatcherOutput = new ExtMatcher();
+                     extMatcherOutput.outputFileExtValidator(outputFile);
                      this.setMenuLine("Edit output file  extension"+"\n\t\t Current file extension: "+ outputFile.getDestinationExtFile());
                  }
              });
              subMenu1.add(new MenuOption("6","Edit output file path"+"\n\t\t Current file path: "+ outputFile.getDestinationPathFile()){
                  @Override
                  public void doAction() {
-                  pathMatcher.outputFilePathValidator(outputFile);
-                  this.setMenuLine("Edit output file  path"+"\n\t\t Current file path: "+ outputFile.getDestinationPathFile());
+                     PathMatcher pathMatcherOutput = new PathMatcher();
+                     pathMatcherOutput.outputFilePathValidator(outputFile);
+                     this.setMenuLine("Edit output file  path"+"\n\t\t Current file path: "+ outputFile.getDestinationPathFile());
                  }
              });
              subMenu1.add(new MenuOption("+","Go and get it!") {
                  @Override
                  public void doAction() {
-                      ImportFile importFile =  new ImportFile(inputFile.getSourcePathFile()
-                             , inputFile.getSourceNameFile()
-                             , inputFile.getSourceExtFile());
-                     String text = importFile.fileReaderStr();
-                     if  (inputFile.getSourcePathFile().equals("txt")){
-                         ExportReportTxt exportReportTxt = new ExportReportTxt();
-                         exportReportTxt.generateReportTxt(text);
-                     }else if (inputFile.getSourcePathFile().equals("pdf")){
-                         ExportReportPdf exportReportPdf = new ExportReportPdf();
-                         exportReportPdf.generateReportPdf(text);
-                     }else {System.out.print("Error generating this rapport.\nContact le scervice support\nClosing\n");
+                     try {
+                         ImportFile importFile = new ImportFile();
+                         File file = new File(inputFile.getSourcePathFile() + inputFile.getSourceNameFile() + "." + inputFile.getSourceExtFile());
+                         String text = importFile.fileReaderStr(file, inputFile.getSourceExtFile());
+                         //System.out.print(text);
+                         if (outputFile.getDestinationExtFile().equals("txt")) {
+                             ExportReportTxt exportReportTxt = new ExportReportTxt();
+                             exportReportTxt.generateReportTxt(text);
+                         } else if (outputFile.getDestinationExtFile().equals("pdf")) {
+                             File output = new File(outputFile.getDestinationPathFile() + outputFile.getDestinationNameFile() + "." + outputFile.getDestinationExtFile());
+                             ExportReportPdf exportReportPdf = new ExportReportPdf();
+                             exportReportPdf.createPdf();
+                             exportReportPdf.writePdf(output, text);
+                         } else {
+                            // System.out.print(text);
+                             System.out.print("\nError generating this rapport.\nContact le scervice support\nClosing\n");
+                             System.exit(0);
+                         }
+
+                         System.out.print("Have a nice day!");
                          System.exit(0);
+                     } catch (IOException e) {
                      }
-                     System.out.print("Have a nice day!");
-                     System.exit(0);
                  }
              });
+
+
+
+
+
+
+
              subMenu2.add(new MenuOption("1","Enter your text") {
                  @Override
                  public void doAction() {
@@ -182,12 +202,30 @@ public class HomeMenu {
         public void setOutputFile(OutputFile outputFile) {
             this.outputFile = outputFile;
         }
+        /*
         public ExtMatcher getExtMatcher() {
             return extMatcher;
         }
         public void setExtMatcher(ExtMatcher extMatcher) {
             this.extMatcher = extMatcher;
         }
+
+    public FileMatcher getFileMatcher() {
+        return fileMatcher;
+    }
+
+    public void setFileMatcher(FileMatcher fileMatcher) {
+        this.fileMatcher = fileMatcher;
+    }
+
+    public PathMatcher getPathMatcher() {
+        return pathMatcher;
+    }
+
+    public void setPathMatcher(PathMatcher pathMatcher) {
+        this.pathMatcher = pathMatcher;
+    }
+    */
 }
 
 

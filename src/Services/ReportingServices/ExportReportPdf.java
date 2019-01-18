@@ -39,13 +39,14 @@ public class ExportReportPdf {
        return file;
    }
 
-    public void writePdf(File file, String text) {
+    public void writePdf(File file, String text) throws IOException {
       //  createPdf();
     //Loading an existing document
    // File file = new File("\\C:\\Users\\"+ System.getProperty("user.name")+ "\\Desktop\\Report.pdf");
-        try {
-            PDDocument doc = PDDocument.load(file);
 
+            System.out.print(file);
+            PDDocument doc = PDDocument.load(file);
+        System.out.print(text);
             //Creating a PDF Document
             PDPage page = doc.getPage(1);
 
@@ -81,15 +82,14 @@ public class ExportReportPdf {
             contentStream.close();
 
             //Saving the document
-            doc.save(new File("C:/PdfBox_Examples/new.pdf"));
+           doc.save(new File("C:/PdfBox_Examples/new.pdf"));
 
             //Closing the document
             doc.close();
-        }catch (IOException e){}
+
 }
-public void generateReportPdf(String text){
-     writePdf(createPdf(), text);
-}
+
+
 
     public String getText() {
         return text;
