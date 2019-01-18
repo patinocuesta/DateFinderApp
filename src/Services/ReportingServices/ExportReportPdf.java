@@ -1,109 +1,74 @@
 package Services.ReportingServices;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class ExportReportPdf {
 
     private String text;
     private File file;
+public ExportReportPdf(){}
 
-   public ExportReportPdf(){}
+    public void writePdf (String outputTxtString,String outputPdfString, String text) throws FileNotFoundException, DocumentException {
 
-   public File createPdf() {
-       //Creating PDF document object
-       PDDocument document = new PDDocument();
+                String linea, FileName;
+                File InFile = null;
+                FileReader fr = null;
+                BufferedReader br = null;
 
-       for (int i=0; i<10; i++) {
-           //Creating a blank page
-           PDPage blankPage = new PDPage();
+                //Selecciona el archivo a convertir.
+                FileName = outputTxtString;
 
-           //Adding the blank page to the document
-           document.addPage( blankPage );
-       }
+                // Abre el archivo y crea el reader.
+                InFile = new File (FileName);
+                fr = new FileReader (InFile);
+                br = new BufferedReader(fr);
 
-       try {
-           //Saving the document
-           document.save("\\C:\\Users\\"+ System.getProperty("user.name")+ "\\Desktop\\Report.pdf");
-           File file = new File("\\C:\\Users\\"+ System.getProperty("user.name")+ "\\Desktop\\Report.pdf");
-       //Closing the document
-       document.close();
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
-       return file;
-   }
+                //Crea el documento de salida.
+                FileOutputStream archivo = new FileOutputStream(outputPdfString);
+                Document documento = new Document();
+                PdfWriter.getInstance(documento, archivo);
+                documento.open();
 
-    public void writePdf(File file, String text) throws IOException {
-      //  createPdf();
-    //Loading an existing document
-   // File file = new File("\\C:\\Users\\"+ System.getProperty("user.name")+ "\\Desktop\\Report.pdf");
+                try{
+                    while((linea=br.readLine())!=null){
+                        documento = AddNewLine(documento,linea);
+                    }
 
-            System.out.print(file);
-            PDDocument doc = PDDocument.load(file);
-        System.out.print(text);
-            //Creating a PDF Document
-            PDPage page = doc.getPage(1);
+                }catch(Exception e){e.printStackTrace();
 
-            PDPageContentStream contentStream = new PDPageContentStream(doc, page);
+                }finally{
+                    // En el finally cerramos el fichero, para asegurarnos en cualquier circunstancia.
+                    try{
+                        if( null != fr ){
+                            fr.close();
+                        }
+                    }catch (Exception e2){
+                        e2.printStackTrace();
+                    }
+                }
 
-            //Begin the Content stream
-            contentStream.beginText();
+                //Cerramos el documento PDF.
+               //documento.close();
 
-            //Setting the font to the Content stream
-            contentStream.setFont(PDType1Font.TIMES_ROMAN, 16);
+            }
+        public Document AddNewLine(Document doc, String linea)
+                {
+                    try{
 
-            //Setting the leading
-            contentStream.setLeading(14.5f);
+                        doc.add(new Paragraph(linea));
 
-            //Setting the position for the line
-            contentStream.newLineAtOffset(25, 725);
-/*
-    String text1 = "This is an example of adding text to a page in the pdf document.
-    we can add as many lines";
-    String text2 = "as we want like this using the ShowText()  method of the
-    ContentStream class";
-*/
-            //Adding text in the form of string
-            contentStream.showText(text);
-            contentStream.newLine();
-            //contentStream.showText(text2);
-            //Ending the content stream
-            contentStream.endText();
+                                        }catch(DocumentException de){de.printStackTrace();}
 
-            System.out.println("Content added");
+                    return doc;
+                }
 
-            //Closing the content stream
-            contentStream.close();
+            }
 
-            //Saving the document
-           doc.save(new File("C:/PdfBox_Examples/new.pdf"));
-
-            //Closing the document
-            doc.close();
-
-}
-
-
-
-    public String getText() {
-        return text;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
-    public File getFile() {
-        return file;
-    }
-    public void setFile(File file) {
-        this.file = file;
-    }
-}
 
 
 
