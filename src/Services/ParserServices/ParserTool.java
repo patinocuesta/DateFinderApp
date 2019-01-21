@@ -6,23 +6,23 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.joining;
-
+/**
+ * Class for creating a structured list of dates from list of strings containing the dates detected in a text.
+ */
 public class ParserTool {
-/*
-Attributes
-*/
+
     private DateFormats dateFormats = new DateFormats();
     private List<SimpleDateFormat> simpleDateFormats;
-/*
-Constructor
+/**
+*Constructor
 */
     public ParserTool (){ }
     public ParserTool (DateFormats dateFormats, List<SimpleDateFormat> simpleDateFormats){
     this.dateFormats = dateFormats;
     this.simpleDateFormats =  simpleDateFormats;}
-/*
-Method for parsing a String list into Dates list
- */
+/**
+*Method for parsing a String list containing dates into a list of dates.
+*/
     public List<Date> parseListStrToListDate(List<String> listStr) {
         simpleDateFormats = dateFormats.SimpleDateFormatListing();
         List<Date> dates = new ArrayList<Date>();
@@ -39,19 +39,19 @@ Method for parsing a String list into Dates list
         }
         Collections.sort(dates);
         return dates;}
-/*
-Method for formatting a Dates list with default format
- */
+/**
+* Method to format a dates in a list of dates with a default format
+*/
     public  List<DateItem> formatListToMap (List<Date> dates){
-//creo mapa con fechas para eliminar dupliados de la lista dates
+        //Creating map to eliminate duplicates
         Map<Date, Integer> map = new LinkedHashMap<Date, Integer>();
-//mapeo la lista
+        //mapping the list
             for (Date date : dates) {
             map.put(date, Collections.frequency(dates, date));}
-//Paso a dar formato Date definitivo en una lista de objetos DateItem
+            //Giving format to every date in list of dates
         List<DateItem> dateItems = new ArrayList<DateItem>();
         Date dateItem;
-//Formato obtenido con el uso de la clase Calendar
+        //Format given by Calendar class
             for (Map.Entry<Date, Integer> mapentry : map.entrySet()) {
             dateItem = mapentry.getKey();
             Calendar calendar = Calendar.getInstance();
@@ -60,42 +60,43 @@ Method for formatting a Dates list with default format
                                        calendar.get(Calendar.MONTH) + 1,
                                        calendar.get(Calendar.DAY_OF_MONTH),
                                        mapentry.getValue()));}
-
             return dateItems;}
-
+/**
+ * Method for mapping the map we've created in formatListToMap in order to get dates grouped as demanded.
+ * @param dateItems
+ * @return
+ */
     public String  ListToMultilevelMapToString (List<DateItem> dateItems){
         Map<Integer, Map<Integer, List<DateItem>>> mapDateItems=dateItems
                 .stream()
                 .collect(
                         Collectors.groupingBy(p ->p.getYear(),
                                               Collectors.groupingBy(p ->p.getMonth())));
-
+        //Converting map into string for exporting purposes
         String s = mapDateItems.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
                 .map (e ->e.getKey() +":"+ e.getValue()+"")
                 .collect(joining(""));
-
+        //giving format to this string
         s= s.replace("=", "")
                 .replace(":", ":\r\n\t")
                 .replace("], ", "\t-")
                 .replace(")", ")\r\n")
-                .replace("),", ")\r\n")//este  no
+                .replace("),", ")\r\n")
                 .replace("):", ")\r\n")
-                .replace("]}", "\r\n")//este no
+                .replace("]}", "\r\n")
                 .replace(",", "")
                 .replace("{", "-")
                 .replace("[", "\r\n")
-                .replace("=[", "\r\n")//este no
-                .replace("=[", "\r\n")//este no
+                .replace("=[", "\r\n")
+                .replace("=[", "\r\n")
                 .replace("\t\n \t\t\t", "\t\t\t");
-
-
       return s;
     }
-    /*
-    Getters and Setters
-    */
+/**
+* Getters and setters
+*/
     public DateFormats getDateFormats() {
         return dateFormats;
     }
@@ -105,5 +106,6 @@ Method for formatting a Dates list with default format
     public List<SimpleDateFormat> getSimpleDateFormats() {
         return simpleDateFormats;
     }
-    public void setSimpleDateFormats(List<SimpleDateFormat> simpleDateFormats) {this.simpleDateFormats = simpleDateFormats;}
+    public void setSimpleDateFormats(List<SimpleDateFormat> simpleDateFormats) {this.simpleDateFormats = simpleDateFormats;
+    }
 }

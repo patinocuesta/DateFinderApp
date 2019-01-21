@@ -1,15 +1,15 @@
 package Data.Dates;
-
-public class DateItem {
-/*
-Attributes
+/**
+* Class defining every  detected date in any given text
 */
+public class DateItem {
+
     private int year;
     private int month;
     private int day;
     private int qty;
-/*
-Constructors
+/**
+* Constructors
 */
     public DateItem(){}
     public DateItem( int year, int month,int day, int qty){
@@ -17,8 +17,8 @@ Constructors
         this.month=month;
         this.day=day;
         this.qty = qty;}
-/*
-Getters and Setters
+/**
+* Getters and Setters
 */
     public int getYear() {
         return year;
@@ -44,8 +44,8 @@ Getters and Setters
     public void setQty(int qty) {
         this.qty = qty;
     }
-/*
-Method toString. Return all month-days related to this item in order to be printed
+/**
+* Method toString. Return all month-days related to this item in order to be printed
 */
     @Override
     public String toString() {

@@ -3,15 +3,14 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
+/**
+ * Class defining a date formats list including all formats we want to detect in any given text
+ */
 public class DateFormats {
-/*
-Attributes
-*/
     private List<SimpleDateFormat> listDateFormatEn;
-/*
-Constructor
-*/
+/**
+ * Constructor
+ */
     public DateFormats(){
         listDateFormatEn = Arrays.asList(
         new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH),
@@ -20,8 +19,8 @@ Constructor
         new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH),
         new SimpleDateFormat("yyyy MM. dd", Locale.ENGLISH),
         new SimpleDateFormat("MM. dd, yyyy", Locale.ENGLISH));}
-/*
-Getters and Setters
+/**
+* Getters and Setters
 */
     public List<SimpleDateFormat> getListDateFormatEn() {
         return listDateFormatEn;

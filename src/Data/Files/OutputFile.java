@@ -1,11 +1,14 @@
 package Data.Files;
 
+/**
+ * Class defining output file for exporting purposes related to reporting service.
+ */
 public class OutputFile {
     private String destinationNameFile;
     private String destinationExtFile;
     private String destinationPathFile;
-/*
-Constructors
+/**
+ *Constructors
  */
     public OutputFile(){}
     public OutputFile(String destinationNameFile, String destinationExtFile, String destinationPathFile ){
@@ -13,8 +16,8 @@ Constructors
         this.destinationExtFile = destinationExtFile;
         this.destinationPathFile = destinationPathFile;
     }
-/*
-Getters and setters.
+/**
+ *Getters and setters.
  */
     public String getDestinationNameFile() {
         return destinationNameFile;
@@ -34,7 +37,9 @@ Getters and setters.
     public void setDestinationPathFile(String destinationPathFile) {
         this.destinationPathFile = destinationPathFile;
     }
-
+    /**
+     *toString method.
+     */
     @Override
     public String toString() {
         return "OutputFile{" +

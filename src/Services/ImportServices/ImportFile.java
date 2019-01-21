@@ -5,25 +5,24 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-/*
-Class
- */
+/**
+* Class defining a file to be imported by its content and its path-name-ext
+*/
 public class ImportFile {
 
     private String text;
     private String file;
-/*
-Constructor
- */
+/**
+* Constructor
+*/
     public ImportFile() { }
-/*
-Importing method according to file and its extension
- */
+/**
+Importing method according to file and its extension.
+*/
     public String fileReaderStr(File file, String extension) throws IOException {
-/*
-Control extension: if txt importing by Scanner object, if pdf importing with Pdfbox
- */
-
+/**
+Control extension: if txt importing by Scanner object, if pdf importing with Pdfbox.
+*/
         if (extension.equals("txt")) {
             Scanner sc = new Scanner(file);
             //Retrieving text and lines iteration for importing
@@ -54,9 +53,9 @@ Control extension: if txt importing by Scanner object, if pdf importing with Pdf
         }
         return text;
     }
-/*
-Getters and Setters
- */
+/**
+* Getters and setters.
+*/
     public String getFile() {
         return file;
     }

@@ -4,20 +4,22 @@ import Services.ParserServices.TextMatcherParser;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+/**
+ * Class defining the file including the parsing results to be exported.
+ */
 public class ExportReportTxt {
     private String text;
     private String file;
-/*
-Constructors.
+/**
+* Constructors.
 */
     public ExportReportTxt(){}
     public ExportReportTxt(String file, String text){
         this.file = file;
         this.text = text;
     }
-/*
-Method for generating a report.
+/**
+* Method for generating a report.
 */
     public void generateReportTxt(String file, String text) {
 
@@ -27,14 +29,14 @@ Method for generating a report.
             //Object TextMatcherParser for giving the text format we need.
             TextMatcherParser textMatcherParser = new TextMatcherParser();
             //Writing the text.
-            writer.write(textMatcherParser.stringTextToStringMultilevelList(text));
+            writer.write(text);
             writer.close();
             System.out.print("Report generated: " + file +"\n");
-        } catch (IOException e) {System.out.print("\nError generating report.\n");}
+        } catch (IOException e) {}
     }
-/*
-Getters and Setters.
- */
+/**
+* Getters and Setters.
+*/
     public String getText() {
         return text;
     }

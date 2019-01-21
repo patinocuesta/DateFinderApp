@@ -3,35 +3,38 @@ package Menus.MenuModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * Class defining a menu
+ */
 public class Menu {
     private static final String OPTION_EXIT="0";
     private static final String LEVEL_INDENTATION ="    ";
     private List<MenuOption> menuOptions=new ArrayList<>();
     private int level=0;
-
+/**
+ * Constructors
+ */
     public Menu(){}
-
     public Menu(int level){
         this.level=level;
     }
-
+/**
+ * Add new menu option, new option to be added
+ */
     public void add(MenuOption m){
         this.menuOptions.add(m);
     }
+/**
+ * Loop for showing back the menu after any option until exit the application
+ */
     public void loopUntilExit(){
-
         String input;
-
         try(Scanner sc=new Scanner(System.in)) {
-
             while (true) {
-
                 System.out.print(this);
                 System.out.println("----------------------------------------------");
                 System.out.print("Enter your option:\n");
                 input = sc.nextLine();
-
                 if (input.equals(OPTION_EXIT)) {
                     return;
                 }
@@ -49,7 +52,9 @@ public class Menu {
             }
         }
     }
-
+/**
+ * toString method asking user after menu loop
+ */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();

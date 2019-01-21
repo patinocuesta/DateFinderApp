@@ -2,17 +2,24 @@ package Services.RegexMatchers;
 
 import Data.Files.InputFile;
 import Data.Files.OutputFile;
-
 import java.util.Scanner;
-
+/**
+ * Class for approving path extension according to a regex expression.
+ */
 public class PathMatcher {
     private static final String regexInput = "([A-Za-z0-9\\\\:]+)";
     private String input;
-
+/**
+ * Constructors
+ */
     public PathMatcher(){}
     public PathMatcher(String input){
         this.input = input;
     }
+/**
+ * Method for validating the path in a input file
+ * @param inputFile
+ */
     public void inputFilePathValidator (InputFile inputFile) {
         validationLoop();
         input = input.replace("\\","\\\\");
@@ -20,6 +27,10 @@ public class PathMatcher {
         input = input.replace("\\\\","\\");
         System.out.println("Path : " + inputFile.getSourcePathFile() + "\n");
     }
+/**
+ * Method for validating the path in a input file
+ * @param outputFile
+ */
     public void outputFilePathValidator (OutputFile outputFile) {
         validationLoop();
         input = input.replace("\\","\\\\");
@@ -27,7 +38,10 @@ public class PathMatcher {
         input = input.replace("\\\\","\\");
         System.out.println("Path : " + outputFile.getDestinationPathFile() + "\n");
     }
-
+/**
+ * Loop until validation
+ * @return
+ */
     public String  validationLoop() {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -40,7 +54,10 @@ public class PathMatcher {
         } catch (Exception e) {}
         return input;
     }
-
+/**
+ * Getters and setters
+ * @return
+ */
     public static String getRegexInput() {
         return regexInput;
     }
