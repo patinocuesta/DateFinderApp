@@ -5,13 +5,12 @@ import Data.Files.OutputFile;
 import Services.RegexMatchers.FileMatcher;
 import Services.RegexMatchers.ExtMatcher;
 import Services.RegexMatchers.PathMatcher;
-import Services.ReportingServices.ExportReportPdf;
+
 import Services.ReportingServices.ExportReportTxt;
 import Services.ParserServices.TextMatcherParser;
 import Services.ImportServices.ImportFile;
 import Menus.MenuModel.Menu;
 import Menus.MenuModel.MenuOption;
-import com.itextpdf.text.DocumentException;
 
 import java.io.*;
 import java.util.Scanner;
@@ -22,14 +21,16 @@ public class HomeMenu {
     private Menu subMenu1= new Menu(1);
     private Menu subMenu2= new Menu(2);
     private InputFile inputFile = new InputFile("PresidentsList","pdf","C:\\Users\\"+ System.getProperty("user.name")+"\\Desktop\\");
-    private OutputFile outputFile = new OutputFile("Presidents","pdf","C:\\Users\\"+ System.getProperty("user.name")+"\\Desktop\\");
+    private OutputFile outputFile = new OutputFile("Presidents","txt","C:\\Users\\"+ System.getProperty("user.name")+"\\Desktop\\");
 
     public HomeMenu() {}
          public void  homeMenuStart() {
-
              System.out.println("**************");
              System.out.println("* DateFinder *");
              System.out.println("**************\n");
+ /*
+ Submenu for parsing a file
+  */
              subMenu1.add(new MenuOption("1","Edit source file  name"+"\n\t\t Current file name: "+ inputFile.getSourceNameFile()){
                  @Override
                  public void doAction() {
@@ -62,11 +63,10 @@ public class HomeMenu {
                      this.setMenuLine("Edit source file  name"+"\n\t\t Current file name: "+ outputFile.getDestinationNameFile());
                  }
              });
-             subMenu1.add(new MenuOption("5","Edit output file extension(only txt by now)"+"\n\t\t Current file extension: "+ outputFile.getDestinationExtFile()){
+             subMenu1.add(new MenuOption("5","Edit output file extension(only txt available  by now)"+"\n\t\t Current file extension: "+ outputFile.getDestinationExtFile()){
                  @Override
                  public void doAction() {
-                     ExtMatcher extMatcherOutput = new ExtMatcher();
-                     extMatcherOutput.outputFileExtValidator(outputFile);
+                     System.out.print("Only txt available by now.\n");
                      this.setMenuLine("Edit output file  extension"+"\n\t\t Current file extension: "+ outputFile.getDestinationExtFile());
                  }
              });
@@ -80,48 +80,27 @@ public class HomeMenu {
              });
              subMenu1.add(new MenuOption("+","Go and get it!") {
                  @Override
-                 public void doAction()  {
+                 public void doAction() {
                      try {
                          ImportFile importFile = new ImportFile();
-                         File fileInput = new File(inputFile.getSourcePathFile() + inputFile.getSourceNameFile() + "." + inputFile.getSourceExtFile());
-                         String text = importFile.fileReaderStr(fileInput, inputFile.getSourceExtFile());
-                         File fileOutput = new File(outputFile.getDestinationPathFile() + outputFile.getDestinationNameFile() + ".txt");
+                         File file = new File(inputFile.getSourcePathFile() + inputFile.getSourceNameFile() +"."+ inputFile.getSourceExtFile());
+                         String text = importFile.fileReaderStr(file,inputFile.getSourceExtFile());
                          ExportReportTxt exportReportTxt = new ExportReportTxt();
-                         exportReportTxt.generateReportTxt(text, fileOutput);
-
-                         if (outputFile.getDestinationExtFile().equals("pdf")) {
-                             String outputTxtString = outputFile.getDestinationPathFile() + outputFile.getDestinationNameFile() + ".txt";
-                             String outputPdfString = outputFile.getDestinationPathFile() + outputFile.getDestinationNameFile() + ".pdf";
-
-                             ExportReportPdf exportReportPdf = new ExportReportPdf();
-
-                             exportReportPdf.writePdf(outputTxtString,outputPdfString,text);
-
-                             //ok hasta aqui
-
-
-                         } else {
-                            // System.out.print(text);
-                             System.out.print("\nError generating this rapport.\nContact le scervice support\nClosing\n");
-                             System.exit(0);
-                         }
-                         System.out.print("\nReport "+ outputFile.getDestinationNameFile()+"."
-                                 + outputFile.getDestinationExtFile()
-                                    + " saved at "+ outputFile.getDestinationPathFile());
-                         System.out.print("\nHave a nice day!");
+                         exportReportTxt.generateReportTxt(outputFile.getDestinationPathFile() + outputFile.getDestinationNameFile()+ "." + outputFile.getDestinationExtFile(), text);
+                         System.out.print("Have a nice day!");
                          System.exit(0);
-                     } catch (IOException e) {e.printStackTrace();
-                     } catch (DocumentException e) {
-                         e.printStackTrace();
+                     } catch (IOException e) {
                      }
                  }
              });
-
+ /*
+Submenu for parsing a text
+ */
              subMenu2.add(new MenuOption("1","Enter your text") {
                  @Override
                  public void doAction() {
                      try {
-                         System.out.println("Enter three times $ ['$$$'] for finishing your text feed in");
+                         System.out.println("Enter or paste the text to be parsed.\n => ['$$$' + Enter] for ending capture:\n");
                          String text = "";
                          Scanner sc = new Scanner(System.in);
                          while (sc.hasNextLine()) {
@@ -134,36 +113,31 @@ public class HomeMenu {
                          System.out.println("************************************************************\n");
                          System.out.println(textMatcherParser.stringTextToStringMultilevelList(text));
                          System.out.println("----------------------------------------------");
-                         System.out.print("Export report (Y/N):");
-                         String input="";
-                         input = sc.nextLine().toUpperCase();
-                         if  (input.toUpperCase()=="Y"||input.toUpperCase()=="YES"){
-                             textMatcherParser = new TextMatcherParser();
-                             try {
-                                 BufferedWriter writer = new BufferedWriter(new FileWriter(
-                                         "\\C:\\Users\\"+ System.getProperty("user.name")+ "\\Desktop\\"
-                                                 + "reportDates"
-                                                 + "." + "txt"));
-                                 writer.write(textMatcherParser.stringTextToStringMultilevelList(text));
-                                 writer.close();
-                                 System.out.print("Have a nice day!");
+                         System.out.print("Export report (Y/N):\n");
+                         String input = sc.nextLine().toUpperCase();
+                         while (true){
+                             if (input.equals("Y")) {
+                                 textMatcherParser = new TextMatcherParser();
+                                 text = textMatcherParser.stringTextToStringMultilevelList(text);
+                                 ExportReportTxt exportReportTxt = new ExportReportTxt();
+                                 exportReportTxt.generateReportTxt("\\C:\\Users\\" + System.getProperty("user.name") + "\\Desktop\\"
+                                                                           + "reportDates"
+                                                                           + "." + "txt", text);
+                                 System.out.println("Have a nice day!");
                                  System.exit(0);
-                             } catch (IOException e) {}
-                         } else if (input.toUpperCase()=="N"||input.toUpperCase()=="NON") {
-                             System.out.print("Have a nice day!");
-                             System.exit(0);
-                         }
-                         else {
-
-                                 System.out.print("Fill with Y/N. Try again:");
-                                 System.out.print("Have a nice day!");
+                             } else {
+                                 System.out.print("\nClosing application.");
+                                 System.out.println("\nHave a nice day!");
                                  System.exit(0);
-
-                         }
+                             }
+                     }
                      }catch (Exception e) {}
                  }
              }
                  );
+ /*
+ Main menu
+  */
              mainMenu.add(new MenuOption("1","Parse a document stored in your computer") {
                  @Override
                  public void doAction() {
@@ -180,7 +154,9 @@ public class HomeMenu {
              );
              mainMenu.loopUntilExit();
          }
-
+/*
+Getters and setters.
+ */
         public Menu getMainMenu() {
             return mainMenu;
         }
@@ -211,7 +187,6 @@ public class HomeMenu {
         public void setOutputFile(OutputFile outputFile) {
             this.outputFile = outputFile;
         }
-
 }
 
 

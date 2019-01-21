@@ -29,7 +29,7 @@ public class Menu {
 
                 System.out.print(this);
                 System.out.println("----------------------------------------------");
-                System.out.print("Enter your option:");
+                System.out.print("Enter your option:\n");
                 input = sc.nextLine();
 
                 if (input.equals(OPTION_EXIT)) {
@@ -53,7 +53,7 @@ public class Menu {
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Choose an option, "+OPTION_EXIT+" to exit.\n");
+        sb.append("----------------------------------------------\n" + "Choose an option, "+OPTION_EXIT+" to exit.\n");
         for(MenuOption m:menuOptions){
             for(int i=0;i<level;i++){
                 sb.append(LEVEL_INDENTATION);

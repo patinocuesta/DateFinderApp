@@ -4,14 +4,18 @@ public class OutputFile {
     private String destinationNameFile;
     private String destinationExtFile;
     private String destinationPathFile;
-
+/*
+Constructors
+ */
     public OutputFile(){}
     public OutputFile(String destinationNameFile, String destinationExtFile, String destinationPathFile ){
         this.destinationNameFile = destinationNameFile;
         this.destinationExtFile = destinationExtFile;
         this.destinationPathFile = destinationPathFile;
     }
-
+/*
+Getters and setters.
+ */
     public String getDestinationNameFile() {
         return destinationNameFile;
     }
