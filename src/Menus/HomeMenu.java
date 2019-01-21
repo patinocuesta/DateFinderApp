@@ -125,9 +125,9 @@ Submenu for parsing a text
                                                                            + "." + "txt", text);
                                  System.out.println("Have a nice day!");
                                  System.exit(0);
-                             } else if (input.equals("N")) {
-                                 System.out.print("\nClosing application.\n");
-                                 System.out.println("Have a nice day!");
+                             } else {
+                                 System.out.print("\nClosing application.");
+                                 System.out.println("\nHave a nice day!");
                                  System.exit(0);
                              }
                      }
